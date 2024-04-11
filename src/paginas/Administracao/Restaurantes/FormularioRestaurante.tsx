@@ -1,7 +1,8 @@
-import { Box, Button, TextField, Typography } from "@mui/material";
+import { AppBar, Box, Button, TextField, Typography } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import http from "../../../http";
 
 
 
@@ -13,7 +14,7 @@ const FormularioRestaurante = () => {
 
     useEffect(() => {
         if (parametros.id) {
-            axios.get(`http://localhost:8000/api/v2/restaurantes/${parametros.id}/`)
+            http.get(`restaurantes/${parametros.id}/`)
                 .then(resposta => setNomeRestaurante(resposta.data.nome))
         }
     }, [parametros])
@@ -23,7 +24,7 @@ const FormularioRestaurante = () => {
 
 
         if (parametros.id) {
-            axios.put(`http://localhost:8000/api/v2/restaurantes/${parametros.id}/`,
+            http.put(`restaurantes/${parametros.id}/`,
                 {
                     nome: nomeRestaurante
                 })
@@ -35,7 +36,7 @@ const FormularioRestaurante = () => {
 
 
             const dados = { nome: nomeRestaurante }
-            axios.post('http://localhost:8000/api/v2/restaurantes/', dados)
+            http.post('restaurantes/', dados)
                 .then(() => {
                     alert('restaurante cadastrado com sucesso')
                 })
@@ -46,6 +47,14 @@ const FormularioRestaurante = () => {
     }
 
     return (
+        <>
+
+        <AppBar position="static">
+            
+
+
+        </AppBar>
+
         <Box sx={{display:"flex", flexDirection:"column", alignItems:"center"}}>
             <Typography component="h1" variant="h6">
                 Formulário de Restaurantes
@@ -58,6 +67,7 @@ const FormularioRestaurante = () => {
                 <Button type="submit" sx={{marginTop:1}}  fullWidth variant="outlined">Enviar</Button>
             </Box>
         </Box>
+        </>
     )
 }
 
