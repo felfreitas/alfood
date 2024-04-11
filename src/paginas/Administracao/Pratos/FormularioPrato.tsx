@@ -17,10 +17,10 @@ const FormularioPrato = () => {
     const [tags, setTags] = useState<ITag[]>([])
     const [restaurantes, setRestaurantes] = useState<IRestaurante[]>([])
 
-    const selecionarArquivo=(evento: React.ChangeEvent<HTMLInputElement>)=>{
-        if(evento.target.files?.length){
+    const selecionarArquivo = (evento: React.ChangeEvent<HTMLInputElement>) => {
+        if (evento.target.files?.length) {
             setImagem(evento.target.files[0])
-        }else{
+        } else {
             setImagem(null)
         }
 
@@ -38,6 +38,30 @@ const FormularioPrato = () => {
 
     const asoSubmeterForm = (evento: React.FormEvent<HTMLFormElement>) => {
         evento.preventDefault()
+        const formData = new FormData();
+
+        formData.append('nome', nomePrato);
+        formData.append('descricao', descricao);
+        formData.append('tag', tag);
+        formData.append('restaurante', restaurante);
+        if (imagem) { 
+            formData.append('imagem', imagem);
+        }
+
+        console.log(formData);
+        
+        // http.request({
+        //     url:'pratos/',
+        //     method:'POST',
+        //     headers:{
+        //         'Content-Type':'multipart/form-data'
+        //     },
+        //     data: formData
+        // })
+        // .then( ()=>alert("Prato cadastrado com sucesso"))
+        // .catch(erro=>console.log(erro));
+        
+
     }
 
     return (
@@ -54,15 +78,15 @@ const FormularioPrato = () => {
 
 
                                 <TextField label="Nome do Prato" variant="standard" fullWidth
-                                    margin="dense" required value={nomePrato} onChange={evento => setDescricao(evento.target.value)} />
+                                    margin="dense" required value={nomePrato} onChange={evento => setNomePrato(evento.target.value)} />
 
-                                <TextField label="Descrição do Prato" variant="standard" fullWidth margin="dense" required value={nomePrato} onChange={evento => setDescricao(evento.target.value)} />
+                                <TextField label="Descrição do Prato" variant="standard" fullWidth margin="dense" required value={descricao} onChange={evento => setDescricao(evento.target.value)} />
 
                                 <FormControl margin="dense" fullWidth >
                                     <InputLabel id='select-tag'>Tag</InputLabel>
                                     <Select labelId="select-tag" value={tag} onChange={(evento) => setTag(evento.target.value)}>
                                         {
-                                            tags.map(tag => <MenuItem key={tag.id} value={tag.id}>{tag.value}</MenuItem>)
+                                            tags.map(tag => <MenuItem key={tag.id} value={tag.value}>{tag.value}</MenuItem>)
                                         }
                                     </Select>
                                 </FormControl>
