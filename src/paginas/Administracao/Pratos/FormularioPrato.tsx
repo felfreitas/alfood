@@ -48,18 +48,27 @@ const FormularioPrato = () => {
             formData.append('imagem', imagem);
         }
 
-        console.log(formData);
+        console.log(restaurante);
+        console.log(nomePrato);
+        console.log(descricao);
+        console.log(imagem);
         
-        // http.request({
-        //     url:'pratos/',
-        //     method:'POST',
-        //     headers:{
-        //         'Content-Type':'multipart/form-data'
-        //     },
-        //     data: formData
-        // })
-        // .then( ()=>alert("Prato cadastrado com sucesso"))
-        // .catch(erro=>console.log(erro));
+        http.request({
+            url:'pratos/',
+            method:'POST',
+            headers:{
+                'Content-Type':'multipart/form-data'
+            },
+            data: formData
+        })
+        .then( ()=>{
+            setNomePrato('')
+            setDescricao('')
+            setTag('')
+            setRestaurante('')
+            alert('Prato cadastrado com sucesso!')
+        })
+        .catch(erro=>console.log(erro));
         
 
     }
